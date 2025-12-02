@@ -1,0 +1,25 @@
+{
+  "name": "ledgerflow",
+  "version": "1.0.0",
+  "description": "a standalone backend API that processes, categorizes, and analyzes financial transactions for small businesses and fintech apps.",
+  "license": "ISC",
+  "author": "biokes",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.10.1",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.39.1",
+    "express": "^5.2.1",
+    "install": "^0.13.0",
+    "nodemon": "^3.1.11",
+    "pnpm": "^10.24.0",
+    "prettier": "^3.7.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
