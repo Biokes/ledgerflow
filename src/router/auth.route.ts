@@ -8,4 +8,4 @@ export const authRouter: Router = Router()
 authRouter.post('/register', validateRequest(RegisterSchema), authController.register);
 authRouter.post("/login", validateRequest(LoginSchema), authController.login);
 authRouter.post("/logout", authController.logout);
-authController.post("/refresh-token", authController.refreshToken)
+authRouter.post("/refresh-token", authController.refreshToken)

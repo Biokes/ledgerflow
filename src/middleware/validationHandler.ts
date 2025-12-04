@@ -4,11 +4,11 @@ import z,{ ZodObject, ZodRawShape } from "zod";
 import ApiResponse from "../utils/ApiResponse";
 
 export const validateRequest = (schema:  ZodObject<ZodRawShape>) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response, next: NextFunction)=> {
     try {
       const validated = await schema.parseAsync(req.body);
       req.body = validated;
-      next();
+      return next();
     } catch (error) {
       if (error instanceof z.ZodError) {
         const messages = error.issues.map((err) => ({
@@ -17,7 +17,8 @@ export const validateRequest = (schema:  ZodObject<ZodRawShape>) => {
         }));
         return ApiResponse.error(res, 400, messages);
       }
-      next(error);
+      return next(error);
     }
   };
 };
+
