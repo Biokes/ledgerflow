@@ -6,6 +6,7 @@ export const AppRouter: Router = Router();
 AppRouter.get('/health', (req: Request, res: Response) => {
     res.status(200).json({
         status: 'ok',
+        url: req.url,
         timestamp: new Date().toISOString(),
         uptime: process.uptime(),
         environment: process.env.NODE_ENV
