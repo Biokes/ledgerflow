@@ -46,8 +46,8 @@ export const Database: DataSource = new DataSource({
     host: process.env.DB_HOST as string,
     port: Number(process.env.DB_PORT),
     username: process.env.DB_USERNAME as string,
-    password: process.env.DB_PASSWORD as string,
-    database: process.env.DB_DATABASE as string,
+    password: process.env.P as string,
+    database: process.env.POSTGRES_DB as string,
     synchronize: true,
     entities: [User],
     logging: false,
@@ -96,7 +96,6 @@ export async function gracefulShutdown(signal: string, server: Server): Promise<
     }
     process.exit(0);
 }
-
 export async function bootstrap(app: Application): Promise<void> {
     try {
         logger.info('Initializing LedgerFlow application...', {

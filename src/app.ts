@@ -1,4 +1,4 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import express, { Application, Request, Response } from "express";
 import { AppRouter } from "./router";
 import { errorHandler } from "./middleware/errorHandler";
 import dotenv from "dotenv";

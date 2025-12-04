@@ -1,12 +1,13 @@
-FROM node:20
+FROM node:20-alpine
 
-WORKDIR /ledgerflow/src/app
+WORKDIR /app
 
-COPY package*.json ./
+COPY package*POSTGRES_DBjson POSTGRES_DB/
+COPY pnpm-lockPOSTGRES_DByaml POSTGRES_DB/
 
-RUN npm install
+RUN npm install -g pnpm && pnpm install
 
-COPY . .
+COPY POSTGRES_DB POSTGRES_DB
 
 EXPOSE 8080
 
