@@ -19,4 +19,5 @@ services:
       - redis
     volumes:
       - .:/ledgerflow/src/app
-    command: npm run dev    
+    command: npm run dev
+    
