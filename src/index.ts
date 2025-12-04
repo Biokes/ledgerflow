@@ -1,9 +1,4 @@
 import app from "./app";
-import { appConfig } from "./cofig";
-import logger from "./utils/logger";
+import { bootstrap } from "./config";
 
-app.listen(appConfig.port, () => {
-    logger.info(`Server started on port ${appConfig.port}`, {
-        environment: appConfig.nodeEnv
-    })
-})
+bootstrap(app);

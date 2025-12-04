@@ -1,7 +1,7 @@
 import { UserRepository, userRepository } from './../data/repositories/userRepository';
-import { redisClient } from "../cofig";
+import { redisClient } from "../config";
 import LedgerFlowException from "../exceptions";
-import { EMAIL_ALREADY_EXIST, INVALID_DETAILS_PROVIDED,NO_SESSION_FOUND } from "../exceptions/constants";
+import { EMAIL_ALREADY_EXIST, INVALID_DETAILS_PROVIDED, NO_SESSION_FOUND } from "../exceptions/constants";
 import { LoginDTO, RegisterDTO } from "../types/schema";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt"
@@ -25,7 +25,7 @@ class UserService {
         await this.validateEmailExistence(existingUser, dto);
         const hashedPassword: string = await bcrypt.hash(dto.password, Number(process.env.PASSWORD_HASH!))
         const user = await userRepository.create({ name: dto.name, password: hashedPassword, email: dto.email.toLowerCase(), role: UserRole.USER })
-        const userResponse = {email: user.email, name: user.name, id: user.id,createdAt: user.createdAt}
+        const userResponse = { email: user.email, name: user.name, id: user.id, createdAt: user.createdAt }
         await this.cacheUserToRedis(userResponse);
         return userResponse
     }
@@ -41,7 +41,7 @@ class UserService {
         return { token, user: { id: userFound.id, email: userFound.email, name: userFound.name } };
     }
 
-    async logout(req: Request, res: Response) { 
+    async logout(req: Request, res: Response) {
         const token = req.cookies.token;
         if (!token) throw new LedgerFlowException(NO_SESSION_FOUND);
         const payload: any = jwt.verify(token, process.env.JWT_SECRET!);
@@ -56,7 +56,7 @@ class UserService {
         return token;
     }
 
-    private async cacheUserToRedis(response:{email:string, name: string, id: number,createdAt: Date}) {
+    private async cacheUserToRedis(response: { email: string, name: string, id: number, createdAt: Date }) {
         await redisClient.set(`user:email:${response.email}`, response.id.toString());
         await redisClient.setEx(`user:profile:${response.id}`, 86400, JSON.stringify(response));
     }
