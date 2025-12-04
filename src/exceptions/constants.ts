@@ -1,3 +1,3 @@
 export const EMAIL_ALREADY_EXIST = "Email already exist";
 export const INVALID_DETAILS_PROVIDED = "Invalid details provided"
-export const NO_SESSION_FOUND = "NO session found";
+export const NO_SESSION_FOUND = "Not logged in";

@@ -38,16 +38,41 @@ class UserService {
         const existingToken = await redisClient.get(`user:token:${userFound.id}`);
         if (existingToken) return { alreadyLoggedIn: true, token: existingToken };
         const token = await this.signAndCacheLoginToken(userFound);
-        return { token, user: { id: userFound.id, email: userFound.email, name: userFound.name } };
+        const refreshToken = jwt.sign({ userId: userFound.id }, process.env.JWT_REFRESH_SECRET!, { expiresIn: '7d' });
+        await redisClient.setEx(`user:refresh:${userFound.id}`, 7 * 24 * 60 * 60, refreshToken);
+        return { token, refreshToken, user: { id: userFound.id, email: userFound.email, name: userFound.name } };
     }
 
     async logout(req: Request, res: Response) {
-        const token = req.cookies.token;
+        const token = req.cookies.refreshToken;
         if (!token) throw new LedgerFlowException(NO_SESSION_FOUND);
-        const payload: any = jwt.verify(token, process.env.JWT_SECRET!);
+        let payload: any;
+        try {
+            payload = jwt.verify(token, process.env.JWT_REFRESH_SECRET!);
+        } catch {
+            throw new LedgerFlowException(NO_SESSION_FOUND);
+        }
         await redisClient.del(`user:token:${payload.userId}`);
-        res.clearCookie("token");
+        await redisClient.del(`user:refresh:${payload.userId}`);
+        res.clearCookie("refreshToken");
+        res.clearCookie("accessToken");
         return true;
+    }
+
+    async refreshToken(incomingToken: string) {
+        if (!incomingToken) throw new LedgerFlowException(NO_SESSION_FOUND);
+        let payload: any;
+        try {
+            payload = jwt.verify(incomingToken, process.env.JWT_REFRESH_SECRET!);
+        } catch (err) {
+            throw new LedgerFlowException(NO_SESSION_FOUND);
+        }
+        const savedToken = await redisClient.get(`user:refresh:${payload.userId}`);
+        if (!savedToken || savedToken !== incomingToken) throw new LedgerFlowException(NO_SESSION_FOUND);
+        const user = await this.userRepository.findById(payload.userId);
+        if (!user) throw new LedgerFlowException(NO_SESSION_FOUND);
+        const newAccessToken = await this.signAndCacheLoginToken(user as User);
+        return { accessToken: newAccessToken };
     }
 
     private async signAndCacheLoginToken(userFound: User) {
