@@ -1,5 +1,6 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import { AppRouter } from "./router";
+import { errorHandler } from "./middleware/errorHandler";
 import dotenv from "dotenv";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
@@ -26,9 +27,18 @@ app.use(
 	})
 );
 
-
-
 app.use(express.json());
 app.use("/", AppRouter);
+
+app.use((req: Request, res: Response) => {
+	res.status(404).json({
+		success: false,
+		statusCode: 404,
+		message: `Route ${req.method} ${req.path} not found`,
+		timestamp: new Date().toISOString()
+	});
+});
+
+app.use(errorHandler);
 
 export default app;
