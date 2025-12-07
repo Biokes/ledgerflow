@@ -2,12 +2,12 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package*POSTGRES_DBjson POSTGRES_DB/
-COPY pnpm-lockPOSTGRES_DByaml POSTGRES_DB/
+COPY package*.json ./
+COPY pnpm-lock.yaml ./
 
 RUN npm install -g pnpm && pnpm install
 
-COPY POSTGRES_DB POSTGRES_DB
+COPY . .
 
 EXPOSE 8080
 
