@@ -11,14 +11,18 @@ dotenv.config({
 });
 
 const app: Application = express();
-app.use(
-	rateLimit({
-		message: "Too many requests",
-		max: 100,
-		windowMs: RATE_LIMIT_MS,
-		statusCode: 429
-	})
-);
+const isTest = process.env.NODE_ENV === "test";
+
+if (!isTest) {
+	app.use(
+		rateLimit({
+			message: "Too many requests",
+			max: 100,
+			windowMs: RATE_LIMIT_MS,
+			statusCode: 429
+		})
+	);
+}
 
 app.use(
 	cors({
@@ -30,7 +34,7 @@ app.use(
 );
 
 app.use(express.json());
-app.use("/", AppRouter);
+app.use("/api/v1/", AppRouter);
 
 app.use((req: Request, res: Response) => {
 	res.status(404).json({
