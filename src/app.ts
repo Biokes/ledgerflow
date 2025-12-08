@@ -6,7 +6,9 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 import { RATE_LIMIT_MS } from "./utils";
 
-dotenv.config();
+dotenv.config({
+	path: process.env.NODE_ENV === "development"? ".env":".env.test"
+});
 
 const app: Application = express();
 app.use(

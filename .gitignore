@@ -6,3 +6,5 @@ dist
 coverage
 .claude
 logs
+.env
+.env.test
