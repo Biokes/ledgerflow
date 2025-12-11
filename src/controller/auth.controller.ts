@@ -8,6 +8,7 @@ import { ONE_DAY, ONE_WEEK } from "../utils";
 class Authcontroller {
     async register(req: Request, res: Response, next: NextFunction) {
         try {
+            console.log("start i")
             const registerationResult = await userService.register(req.body as RegisterDTO);
             return ApiResponse.success(res, registerationResult, 201, 'user registerations successful')
         } catch (error: any) {

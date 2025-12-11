@@ -7,7 +7,9 @@ import rateLimit from "express-rate-limit";
 import { RATE_LIMIT_MS } from "./utils";
 
 dotenv.config({
-	path: process.env.NODE_ENV === "development"? ".env":".env.test"
+	path: process.env.NODE_ENV === "development" ? ".env" : ".env.test",
+	override: true,
+	debug: false
 });
 
 const app: Application = express();
