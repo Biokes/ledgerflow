@@ -32,7 +32,7 @@ const startServer = () => {
         App.listen(AppConfig.PORT, () => {
             Logger.info(`${AppConfig.SERVICE_NAME} running on port ${AppConfig.PORT}`)
         })
-    } catch (error) { 
+    } catch (error) {
         Logger.error("Failed to start server: ", error);
         process.exit(1);
     }
