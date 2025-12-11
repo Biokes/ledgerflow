@@ -24,3 +24,9 @@ export const Logger = winston.createLogger({
 		new _transports.File({ filename: "logs/combined.log" })
 	]
 });
+
+export const AppConfig = {
+    PORT: Number(process.env.PORT!),
+    LOG_LEVEL: process.env.LOG_LEVEL!,
+    SERVICE_NAME: require("../../package.json").name
+}

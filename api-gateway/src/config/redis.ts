@@ -3,14 +3,18 @@ import { Logger } from ".";
 
 class RedisCLient {
 	private static instance: Redis;
-	private static isConnected: boolean;
-	private constructor() {}
+    private static isConnected: boolean;
+    
+    private constructor() { }
+    
 	public static getRedis(): Redis {
 		return this.instance;
-	}
+    }
+    
 	public static isReady(): boolean {
 		return this.isConnected;
-	}
+    }
+    
 	public static setUpEventListeners(): void {
         RedisCLient.instance.on("error", (err) => {
             RedisCLient.isConnected = false;
@@ -28,7 +32,7 @@ class RedisCLient {
         });
         
         RedisCLient.instance.on("reconnecting", () =>
-            Logger.info("Redis Client Reconnecting.");
+            Logger.info("Redis Client Reconnecting.")
 		);
 	}
 
