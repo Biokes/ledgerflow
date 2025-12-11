@@ -7,7 +7,7 @@ const App: Application = express();
 
 App.use(helmet());
 App.use(cors());
-
+App.use()
 App.get("/health", (_req: Request, res: Response) => {
 	res.status(200).json({ status: "OK" });
 });

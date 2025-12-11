@@ -28,5 +28,6 @@ export const Logger = winston.createLogger({
 export const AppConfig = {
     PORT: Number(process.env.PORT!),
     LOG_LEVEL: process.env.LOG_LEVEL!,
-    SERVICE_NAME: require("../../package.json").name
+    SERVICE_NAME: require("../../package.json").name,
+    RATE_LIMIT_MS: 15 * 60 * 1_000
 }
