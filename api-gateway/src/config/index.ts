@@ -29,5 +29,7 @@ export const AppConfig = {
     PORT: Number(process.env.PORT!),
     LOG_LEVEL: process.env.LOG_LEVEL!,
     SERVICE_NAME: require("../../package.json").name,
-    RATE_LIMIT_MS: 15 * 60 * 1_000
+	RATE_LIMIT_MS: 15 * 60 * 1_000,
+	AUTH_SERVICE_URL: process.env.AUTH_SERVICE_URL!,
+	
 }

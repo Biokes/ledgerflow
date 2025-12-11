@@ -2,12 +2,14 @@ import express, { Application, NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import cors from "cors";
 import { AppConfig, Logger } from "./config";
+import { Limit } from "./middlewares/rate-limiter";
 
 const App: Application = express();
 
 App.use(helmet());
 App.use(cors());
-App.use()
+App.use(Limit)
+
 App.get("/health", (_req: Request, res: Response) => {
 	res.status(200).json({ status: "OK" });
 });
