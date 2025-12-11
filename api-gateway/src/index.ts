@@ -3,6 +3,7 @@ import helmet from "helmet";
 import cors from "cors";
 import { AppConfig, Logger } from "./config";
 import { Limit } from "./middlewares/rate-limiter";
+import proxyServices from "./config/srvicesIndexer";
 
 const App: Application = express();
 
@@ -13,6 +14,8 @@ App.use(Limit)
 App.get("/health", (_req: Request, res: Response) => {
 	res.status(200).json({ status: "OK" });
 });
+
+proxyServices(App);
 
 App.use((_req: Request, res: Response) => {
 	res.status(404).json({ message: "RESOURCE NOT FOUND" });

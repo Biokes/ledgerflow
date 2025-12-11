@@ -15,7 +15,12 @@ class ServicesProxy {
             timeout: 5000
         }
     ]
+    
+    private static handleProxyRequest(req: any, res: any) { }
+    
 
+    private static handleProxyResponse(req: any, res: any) { }
+    
     private static handleProxyError(err: Error, req: any, res: any) {
         Logger.error(`Proxy error for ${req.path}: `, err);
         ApiResponse.error(res, 503, {
@@ -48,4 +53,9 @@ class ServicesProxy {
             }
         }
     }
+   
+}
+
+export default function proxyServices(app: Application) { 
+    ServicesProxy.setUpProxy(app);
 }
