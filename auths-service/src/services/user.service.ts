@@ -1,4 +1,4 @@
-import { UserRepository, userRepository } from './../data/repositories/userRepository';
+import { UserRepository, userRepository } from '../data/repositories/userRepository';
 import { redisClient } from "../config";
 import LedgerFlowException from "../exceptions";
 import { EMAIL_ALREADY_EXIST, INVALID_DETAILS_PROVIDED, NO_SESSION_FOUND } from "../exceptions/constants";
