@@ -8,3 +8,4 @@ coverage
 logs
 .env
 .env.test
+node_modules

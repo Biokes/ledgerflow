@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../types';
 import logger from '../utils/logger';
+import dotenv from "dotenv";
+
 
 export const errorHandler = (
   err: AppError,

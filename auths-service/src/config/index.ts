@@ -79,7 +79,7 @@ export async function gracefulShutdown(signal: string, server: Server): Promise<
         logger.info('HTTP server closed');
     });
     try {
-        if (Database.isInitialized) {
+    if (Database.isInitialized) {
             await Database.destroy();
             logger.info('✅ Database connection closed');
         }

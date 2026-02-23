@@ -1,7 +1,7 @@
 {
 	"name": "ledgerflow",
 	"version": "1.0.0",
-	"description": "a standalone backend API that processes, categorizes, and analyzes financial transactions for small businesses and fintech apps.",
+	"description": "a micro-service API that processes, categorizes, and analyzes auth actions",
 	"license": "ISC",
 	"author": "biokes",
 	"type": "module",
